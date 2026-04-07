@@ -7,7 +7,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Share2, RefreshCw, AlertTriangle } from 'lucide-react';
+import { BookOpen, Share2, RefreshCw, AlertTriangle, Shirt, Sparkles, MapPin } from 'lucide-react';
 import { CharacterView } from '../components/CharacterView';
 import { WeatherCard } from '../components/WeatherCard';
 import { Button } from '../components/ui';
@@ -16,6 +16,7 @@ import { matchCharacter, selectLine, getWeatherTag } from '../lib/matching';
 import { discoverCharacter, setLastShown, isTodayShown, getLastShown } from '../lib/storage';
 import { getCharacterById } from '../lib/matching';
 import { getWeatherEmoji } from '../data/design-tokens';
+import { getOutfitRecommendation, getActivityRecommendation, getOracleMessage } from '../lib/recommendations';
 import type { Character, WeatherTag } from '../data/types';
 
 type PageState = 'loading' | 'ready' | 'error';
@@ -226,8 +227,119 @@ export default function Home() {
           </div>
         )}
 
+        {/* ── Value-add sections ── */}
+        {(() => {
+          const outfit = getOutfitRecommendation(weather.temperature, character);
+          const activity = getActivityRecommendation(weatherTag);
+          const oracle = getOracleMessage(character);
+          return (
+            <div className="flex flex-col gap-3 animate-fade-in stagger-4" style={{ marginTop: '16px' }}>
+              {/* Outfit recommendation */}
+              <div style={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '12px',
+                padding: '14px 16px',
+                background: 'var(--surface)',
+                borderRadius: '16px',
+                border: '1px solid var(--border-light)',
+              }}>
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '12px',
+                  background: `${character.colors.primary}12`,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                }}>
+                  <Shirt size={18} color={character.colors.primary} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text)', marginBottom: '4px' }}>
+                    {outfit.emoji} 오늘의 옷차림
+                  </div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginBottom: '6px' }}>
+                    {outfit.items.map(item => (
+                      <span key={item} style={{
+                        fontSize: '12px',
+                        padding: '3px 8px',
+                        borderRadius: '8px',
+                        background: `${character.colors.primary}10`,
+                        color: character.colors.secondary,
+                        fontWeight: 500,
+                      }}>
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                  <p style={{ fontSize: '12px', color: 'var(--text-dim)', fontStyle: 'italic' }}>
+                    {outfit.characterTip}
+                  </p>
+                </div>
+              </div>
+
+              {/* Activity recommendation */}
+              <div style={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '12px',
+                padding: '14px 16px',
+                background: 'var(--surface)',
+                borderRadius: '16px',
+                border: '1px solid var(--border-light)',
+              }}>
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '12px',
+                  background: `${character.colors.primary}12`,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                }}>
+                  <MapPin size={18} color={character.colors.primary} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text)', marginBottom: '2px' }}>
+                    {activity.emoji} 추천 활동: {activity.activity}
+                  </div>
+                  <p style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+                    {activity.reason}
+                  </p>
+                </div>
+              </div>
+
+              {/* Oracle message */}
+              <div style={{
+                padding: '16px',
+                background: `linear-gradient(135deg, ${character.colors.primary}08, ${character.colors.secondary}06)`,
+                borderRadius: '16px',
+                border: `1px solid ${character.colors.primary}15`,
+                textAlign: 'center',
+              }}>
+                <Sparkles size={16} color={character.colors.primary} style={{ marginBottom: '8px' }} />
+                <p style={{
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  color: 'var(--text)',
+                  lineHeight: 1.6,
+                  fontStyle: 'italic',
+                }}>
+                  &ldquo;{oracle}&rdquo;
+                </p>
+                <p style={{ fontSize: '11px', color: 'var(--text-dim)', marginTop: '6px' }}>
+                  {character.name}의 오늘의 메시지
+                </p>
+              </div>
+            </div>
+          );
+        })()}
+
         {/* Action buttons */}
-        <div className="flex gap-3 animate-fade-in stagger-4" style={{ marginTop: '20px' }}>
+        <div className="flex gap-3 animate-fade-in stagger-5" style={{ marginTop: '20px' }}>
           <Button
             variant="secondary"
             onClick={() => navigate('/pokedex')}
