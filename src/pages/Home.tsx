@@ -123,7 +123,8 @@ export default function Home() {
       <CharacterView
         character={character}
         line={line}
-        height="55vh"
+        weatherTag={weatherTag}
+        height="58vh"
       />
 
       {/* Hidden character badge */}
