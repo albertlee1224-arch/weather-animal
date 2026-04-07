@@ -1,0 +1,541 @@
+@import 'tailwindcss';
+
+/* ═══════════════════════════════════════════
+   날씨 동물 — Bright Weather Theme
+   ═══════════════════════════════════════════ */
+
+:root {
+  /* ── Core Colors ── */
+  --bg: #EEF4FF;
+  --surface: #FFFFFF;
+  --surface-hover: #E8F0FE;
+  --border: #C8D6E8;
+  --border-light: #DEE8F5;
+
+  --main-accent: #4A90D9;
+  --main-accent-dim: rgba(74, 144, 217, 0.12);
+  --sub-accent: #7CB3F0;
+  --sub-accent-dim: rgba(124, 179, 240, 0.12);
+
+  --text: #1A2332;
+  --text-secondary: #5A6B80;
+  --text-dim: #8899AA;
+  --text-light: #FFFFFF;
+
+  /* ── Weather Palette ── */
+  --weather-sunny: #FFB830;
+  --weather-cloudy: #94A3B8;
+  --weather-rain: #4A90D9;
+  --weather-snow: #B8D4F0;
+  --weather-wind: #64B5A0;
+  --weather-hot: #F06040;
+  --weather-cold: #60A0D0;
+
+  /* ── State Colors ── */
+  --success: #4ADE80;
+  --success-dim: rgba(74, 222, 128, 0.12);
+  --warning: #FBBF24;
+  --warning-dim: rgba(251, 191, 36, 0.10);
+  --error: #FB7185;
+  --error-dim: rgba(251, 113, 133, 0.10);
+
+  /* ── Rarity ── */
+  --rarity-standard: #4A90D9;
+  --rarity-hidden: #C084FC;
+  --rarity-hidden-dim: rgba(192, 132, 252, 0.12);
+
+  /* ── Typography ── */
+  --font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+
+  --text-display: 32px;
+  --text-heading: 24px;
+  --text-title: 18px;
+  --text-body: 16px;
+  --text-caption: 13px;
+  --text-overline: 12px;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-extrabold: 800;
+
+  --leading-tight: 1.2;
+  --leading-snug: 1.3;
+  --leading-normal: 1.4;
+  --leading-relaxed: 1.7;
+
+  /* ── Spacing (4px grid) ── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* ── Component Tokens ── */
+  --btn-height: 52px;
+  --btn-radius: 14px;
+  --card-radius: 18px;
+  --card-padding: 20px;
+  --card-shadow: 0 2px 16px rgba(74, 144, 217, 0.08);
+  --card-shadow-hover: 0 8px 28px rgba(74, 144, 217, 0.12);
+  --badge-radius: 10px;
+
+  /* ── Layout ── */
+  --layout-max: 420px;
+  --layout-px: 20px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  /* ── Animation ── */
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+}
+
+
+/* ═══════════════════════════════════════════
+   Global Reset & Base
+   ═══════════════════════════════════════════ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html, body {
+  font-family: var(--font-family);
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-relaxed);
+  color: var(--text);
+  background-color: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100dvh;
+  padding-bottom: var(--safe-bottom);
+}
+
+#root {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* ═══════════════════════════════════════════
+   Typography Utility Classes
+   ═══════════════════════════════════════════ */
+
+.text-display {
+  font-size: var(--text-display);
+  font-weight: var(--weight-extrabold);
+  letter-spacing: -0.5px;
+  line-height: var(--leading-tight);
+}
+
+.text-heading {
+  font-size: var(--text-heading);
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.3px;
+  line-height: var(--leading-snug);
+}
+
+.text-title {
+  font-size: var(--text-title);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-normal);
+}
+
+.text-body {
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-relaxed);
+}
+
+.text-caption {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-regular);
+  line-height: 1.5;
+}
+
+.text-overline {
+  font-size: var(--text-overline);
+  font-weight: var(--weight-bold);
+  letter-spacing: 2px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+
+/* ═══════════════════════════════════════════
+   Container / Layout
+   ═══════════════════════════════════════════ */
+
+.container-app {
+  width: 100%;
+  max-width: var(--layout-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--layout-px);
+  padding-right: var(--layout-px);
+}
+
+
+/* ═══════════════════════════════════════════
+   Button Base Styles
+   ═══════════════════════════════════════════ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: var(--btn-height);
+  padding: 0 var(--space-6);
+  border: none;
+  border-radius: var(--btn-radius);
+  font-family: var(--font-family);
+  font-size: 16px;
+  font-weight: var(--weight-semibold);
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition:
+    transform var(--duration-fast) var(--ease-default),
+    background-color var(--duration-normal) var(--ease-default),
+    box-shadow var(--duration-normal) var(--ease-default),
+    border-color var(--duration-normal) var(--ease-default);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.btn-primary {
+  background-color: var(--main-accent);
+  color: #FFFFFF;
+  box-shadow: 0 2px 12px rgba(74, 144, 217, 0.25);
+}
+
+.btn-primary:active {
+  box-shadow: 0 1px 6px rgba(74, 144, 217, 0.15);
+}
+
+.btn-secondary {
+  background-color: var(--surface);
+  color: var(--main-accent);
+  border: 1.5px solid var(--border);
+}
+
+.btn-secondary:active {
+  background-color: var(--surface-hover);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--text-secondary);
+  border: none;
+  height: auto;
+  padding: var(--space-3) var(--space-4);
+  font-size: 14px;
+}
+
+.btn-ghost:active {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+
+/* ═══════════════════════════════════════════
+   Card Base Styles
+   ═══════════════════════════════════════════ */
+
+.card {
+  background: var(--surface);
+  border-radius: var(--card-radius);
+  padding: var(--card-padding);
+  box-shadow: var(--card-shadow);
+  transition:
+    transform var(--duration-normal) var(--ease-default),
+    box-shadow var(--duration-normal) var(--ease-default);
+}
+
+.card-interactive {
+  cursor: pointer;
+}
+
+.card-interactive:active {
+  transform: scale(0.98);
+  box-shadow: var(--card-shadow-hover);
+}
+
+
+/* ═══════════════════════════════════════════
+   Badge
+   ═══════════════════════════════════════════ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: var(--badge-radius);
+  font-size: 12px;
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.01em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+
+/* ═══════════════════════════════════════════
+   Weather-specific components
+   ═══════════════════════════════════════════ */
+
+.weather-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.weather-stat-value {
+  font-size: var(--text-title);
+  font-weight: var(--weight-bold);
+  color: var(--text);
+}
+
+.weather-stat-label {
+  font-size: var(--text-overline);
+  color: var(--text-dim);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.forecast-strip {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 4px 0;
+}
+
+.forecast-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.forecast-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  min-width: 56px;
+  padding: 10px 8px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+
+/* ═══════════════════════════════════════════
+   Pokedex Grid
+   ═══════════════════════════════════════════ */
+
+.pokedex-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.pokedex-cell {
+  aspect-ratio: 1;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-default);
+  position: relative;
+}
+
+.pokedex-cell:active {
+  transform: scale(0.95);
+}
+
+.pokedex-cell-undiscovered {
+  background: rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* ═══════════════════════════════════════════
+   Animations
+   ═══════════════════════════════════════════ */
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-8px); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes gentle-bounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%      { transform: translateY(-8px) scale(1.05); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(74, 144, 217, 0.3); }
+  50%      { box-shadow: 0 0 20px 6px rgba(74, 144, 217, 0.15); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.animate-fade-in {
+  animation: fade-in var(--duration-slow) var(--ease-out) both;
+}
+
+.animate-scale-in {
+  animation: scale-in var(--duration-slow) var(--ease-spring) both;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s var(--ease-out) both;
+}
+
+.animate-bounce {
+  animation: gentle-bounce 2s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 30%, rgba(255,255,255,0.4) 50%, transparent 70%);
+  background-size: 200% 100%;
+  animation: shimmer 1.8s ease-in-out infinite;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+
+/* ═══════════════════════════════════════════
+   Stagger delays
+   ═══════════════════════════════════════════ */
+
+.stagger-1 { animation-delay: 50ms; }
+.stagger-2 { animation-delay: 100ms; }
+.stagger-3 { animation-delay: 150ms; }
+.stagger-4 { animation-delay: 200ms; }
+.stagger-5 { animation-delay: 250ms; }
+.stagger-6 { animation-delay: 300ms; }
+.stagger-7 { animation-delay: 350ms; }
+.stagger-8 { animation-delay: 400ms; }
+.stagger-9 { animation-delay: 450ms; }
+.stagger-10 { animation-delay: 500ms; }
+
+
+/* ═══════════════════════════════════════════
+   Safe Area & WebView Adjustments
+   ═══════════════════════════════════════════ */
+
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .safe-bottom {
+    padding-bottom: calc(var(--space-6) + env(safe-area-inset-bottom));
+  }
+}
+
+/* iOS momentum scroll */
+.scroll-touch {
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+}
+
+/* Prevent text selection on interactive elements */
+button, [role="button"] {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Focus ring for accessibility */
+:focus-visible {
+  outline: 2px solid var(--main-accent);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+
+/* ═══════════════════════════════════════════
+   Scrollbar (subtle for desktop preview)
+   ═══════════════════════════════════════════ */
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}
